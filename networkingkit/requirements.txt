@@ -1,1 +1,1 @@
-ssh_paramiko
+paramiko
