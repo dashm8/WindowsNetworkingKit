@@ -133,10 +133,11 @@ def netcatserver(inp):
         sock = socket.socket()
         sock.bind(('0.0.0.0',port))
         sock.listen(1)
-        conn , addr = sock.accept()
+        conn , (addr,port) = sock.accept()
         print("[+] connection from: " + addr)
         while 1:
             data = conn.recv(1024)
+            print(repr(data))
             if not data: break
             senddata = input(">")
             if senddata == "exit": break
@@ -225,7 +226,6 @@ def handler(inp):
         listcommands()
     else:
         p = subprocess.Popen(inp,shell=True)
-
 
 def Console():
     while 1:        
