@@ -6,8 +6,10 @@ import socket
 import time
 import subprocess
 from  paramiko import SSHClient, SFTPClient
+import paramiko
 from ftplib import FTP
 import telnetlib 
+from getpass import getpass
 
 def listcommands():
     print("                     help screen                                  ")
@@ -91,15 +93,17 @@ def portscan(inp):
 
 def ssh(inp):
     try:
-        password = inp.split(' ')[2]
+        print("enter password: ")
+        password = getpass(prompt="")
         username = (inp.split('@')[0])[4:]
-        addr = inp.split('@')[1].split(' ')[0]
+        addr = inp.split('@')[1]
     except Exception:
-        print("[!] usage ssh <user>@<serveraddr> <password>")
+        print("[!] usage ssh <user>@<serveraddr>")
         return None
     try:
         client = SSHClient()
         client.load_system_host_keys()
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         client.connect(addr,username=username,password=password)
         client.invoke_shell()
     except Exception as e:
