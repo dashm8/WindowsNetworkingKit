@@ -23,6 +23,7 @@ def listcommands():
     print("telnet \t \t opens a telnet connection")
     print("rshell \t \t opens a reverse shell")
     print("hostdiscover \t \t looks for all hosts in your network")
+    print("pubip \t \t gets your public ip through a web request")
     print("=======================================================")
     print()
 
@@ -79,12 +80,15 @@ def portscan(inp):
                     openports.append(port)
         else:
             for port in range(1,1025):
+                print("trying port: " + str(port))
                 sock = socket.socket()
                 res = sock.connect_ex((addr,port))
                 if res == 0:
+                    print("port "+ str(port) +" is open")
                     openports.append(port)
+
         for ports in openports:
-            print("[+] port number:" + port + "is open in host:" + addr)
+            print("[+] port number:" + str(port) + "is open in host:" + addr)
     except IndexError:
         print("[!] usage is portscan <addr> <portrange> optionl")
         return None
